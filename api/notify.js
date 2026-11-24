@@ -1,54 +1,71 @@
 
-const express = require("express");
-const path = require("path");
-require("dotenv").config();
+module.exports = async (req, res) => {
+  if (req.method !== "POST") {
+    return res.status(405).json({
+      success: false,
+      error: "Method not allowed"
+    });
+  }
 
-const app = express();
-
-app.use(express.json());
-app.use(express.static("public"));
-
-app.post("/api/notify", async (req, res) => {
   try {
-    const { text } = req.body;
+    const { text, form } = req.body || {};
 
-    if (!text || typeof text !== "string") {
+    if (
+      typeof text !== "string" ||
+      !text.trim()
+    ) {
       return res.status(400).json({
         success: false,
-        error: "Invalid message"
+        error: "Message is required"
       });
     }
 
+    const token = process.env.BOT_TOKEN;
+    const chatId = process.env.CHAT_ID;
+
+    if (!token || !chatId) {
+      throw new Error("Telegram environment variables missing");
+    }
+
     const telegramResponse = await fetch(
-      `https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendMessage`,
+      `https://api.telegram.org/bot${token}/sendMessage`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          chat_id: process.env.CHAT_ID,
-          text: `New website submission:\n\n${text}`
+          chat_id: chatId,
+          text:
+            `NEW WEBSITE SUBMISSION\n\n` +
+            `Form: ${form || "Website form"}\n\n` +
+            `${text}`
         })
       }
     );
 
-    if (!telegramResponse.ok) {
-      throw new Error("Telegram error");
+    const result = await telegramResponse.json();
+
+    if (!telegramResponse.ok || !result.ok) {
+      console.error("Telegram error:", result);
+
+      return res.status(502).json({
+        success: false,
+        error: "Telegram delivery failed"
+      });
     }
 
-    res.json({ success: true });
+    return res.status(200).json({
+      success: true,
+      message: "Notification delivered"
+    });
 
   } catch (error) {
-    console.error(error);
+    console.error("API error:", error);
 
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
-      error: "Notification failed"
+      error: "Server notification failed"
     });
   }
-});
-
-app.listen(3000, () => {
-  console.log("Server running on port 3000");
-});
+};
