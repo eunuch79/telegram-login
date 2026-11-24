@@ -1,64 +1,54 @@
-export default async function handler(req, res) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ success: false });
-  }
 
-  const body = req.body || {};
-  const phone = typeof body.phone === "string"
-    ? body.phone.trim()
-    : "";
+const express = require("express");
+const path = require("path");
+require("dotenv").config();
 
-  if (!phone) {
-    return res.status(400).json({
-      success: false,
-      message: "Phone number is required"
-    });
-  }
+const app = express();
 
-  const BOT_TOKEN = process.env.BOT_TOKEN;
-  const CHAT_ID = process.env.CHAT_ID;
+app.use(express.json());
+app.use(express.static("public"));
 
-  if (!BOT_TOKEN || !CHAT_ID) {
-    return res.status(500).json({
-      success: false,
-      message: "Missing Telegram configuration"
-    });
-  }
-
-  const telegramMessage =
-    "SCHOOL PROJECT - DEMO LOGIN\n\n" +
-    "Phone: " + phone + "\n" +
-    "Reference: REF-82941\n" +
-    "Status: Test submission received";
-
+app.post("/api/notify", async (req, res) => {
   try {
-    const response = await fetch(
-      `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`,
+    const { text } = req.body;
+
+    if (!text || typeof text !== "string") {
+      return res.status(400).json({
+        success: false,
+        error: "Invalid message"
+      });
+    }
+
+    const telegramResponse = await fetch(
+      `https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendMessage`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          chat_id: CHAT_ID,
-          text: telegramMessage
+          chat_id: process.env.CHAT_ID,
+          text: `New website submission:\n\n${text}`
         })
       }
     );
 
-    if (!response.ok) {
-      return res.status(502).json({
-        success: false,
-        message: "Telegram delivery failed"
-      });
+    if (!telegramResponse.ok) {
+      throw new Error("Telegram error");
     }
 
-    return res.status(200).json({ success: true });
+    res.json({ success: true });
 
   } catch (error) {
-    return res.status(500).json({
+    console.error(error);
+
+    res.status(500).json({
       success: false,
-      message: "Server error"
+      error: "Notification failed"
     });
   }
-}
+});
+
+app.listen(3000, () => {
+  console.log("Server running on port 3000");
+});
