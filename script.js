@@ -1,22 +1,21 @@
-const loginForm = document.getElementById("loginForm");
+const form = document.getElementById("accessForm");
 const message = document.getElementById("message");
 
-loginForm.addEventListener("submit", async function (event) {
+form.addEventListener("submit", async (event) => {
   event.preventDefault();
 
-  const phoneInput =
-    loginForm.querySelector('input[type="tel"]') ||
-    loginForm.querySelector('input[name="phone"]') ||
-    loginForm.querySelector('input:not([type="password"])');
+  const input = form.querySelector(
+    'input[name="message"]'
+  );
 
-  const phone = phoneInput?.value.trim();
+  const text = input.value.trim();
 
-  if (!phone) {
-    message.textContent = "Enter mobile number.";
+  if (!text) {
+    message.textContent = "Enter your message.";
     return;
   }
 
-  message.textContent = "Processing your request...";
+  message.textContent = "Sending...";
 
   try {
     const response = await fetch("/api/notify", {
@@ -24,23 +23,17 @@ loginForm.addEventListener("submit", async function (event) {
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ phone,password})
+      body: JSON.stringify({ text })
     });
 
     if (!response.ok) {
-      throw new Error("Notification failed");
+      throw new Error("Failed");
     }
 
-    message.textContent =
-      "Request received successfully!";
-
-    message.style.color = "#22c55e";
-    loginForm.reset();
+    message.textContent = "Message sent successfully!";
+    form.reset();
 
   } catch (error) {
-    message.textContent =
-      "Unable to send notification. Please try again.";
-
-    message.style.color = "#ef4444";
+    message.textContent = "Unable to send. Try again.";
   }
 });
