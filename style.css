@@ -1,358 +1,218 @@
 
-/* =========================
-   GLOBAL RESET
-========================= */
-
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-html {
+html, body {
   width: 100%;
   min-height: 100%;
+  font-family: Arial, sans-serif;
+  background: #050505;
 }
 
 body {
-  width: 100%;
   min-height: 100vh;
   min-height: 100dvh;
-  font-family: Arial, Helvetica, sans-serif;
-  background: #050505;
-  color: #222;
 }
 
-
-/* =========================
-   MAIN BACKGROUND
-========================= */
-
+/* Main background */
 .page-overlay {
   width: 100%;
   min-height: 100vh;
   min-height: 100dvh;
-  background: #050505;
 
   display: flex;
-  flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
 
-  padding: 90px 15px 25px;
+  padding: 105px 15px 25px;
+
+  background: #050505;
 }
 
-
-/* =========================
-   NAVIGATION BAR
-========================= */
-
-.navbar {
-  position: absolute;
-  top: 0;
-  left: 0;
-
-  width: 100%;
-  height: 70px;
-
-  display: flex;
-  align-items: center;
-
-  padding: 0 20px;
-
-  background: #000000;
-  border-bottom: 1px solid #222;
-}
-
-.brand {
-  color: #ffffff;
-  font-size: 23px;
-  font-weight: bold;
-  letter-spacing: 0.5px;
-}
-
-
-/* =========================
-   MAIN FORM CONTAINER
-========================= */
-
+/* Login container */
 .login-modal {
   width: 100%;
-  max-width: 575px;
+  max-width: 390px;
 
   background: #ffffff;
-
-  border-radius: 11px;
+  border-radius: 7px;
   overflow: hidden;
 
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.55);
-
-  position: relative;
-  z-index: 2;
+  box-shadow: 0 8px 30px rgba(0,0,0,.4);
 }
 
-
-/* =========================
-   BLACK FORM HEADER
-========================= */
-
+/* Black header */
 .modal-header {
+  height: 55px;
+  padding: 0 17px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background: #050505;
+  color: white;
+}
+
+.modal-header h2 {
+  font-size: 19px;
+  font-weight: bold;
+}
+
+.close-btn {
+  width: auto;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: white;
+  font-size: 27px;
+  cursor: pointer;
+}
+
+/* Form */
+#accessForm {
+  padding: 17px;
+  background: #ffffff;
+}
+
+/* Phone input */
+.phone-field {
+  height: 48px;
+  display: flex;
+  align-items: center;
+
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  margin-bottom: 13px;
+  overflow: hidden;
+}
+
+.phone-field span {
+  padding: 0 12px;
+  color: #333333;
+  font-size: 15px;
+  border-right: 1px solid #dddddd;
+}
+
+.phone-field input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  padding: 0 11px;
+  border: none;
+  outline: none;
+  font-size: 15px;
+}
+
+/* Password demonstration field */
+#accessForm > input {
   width: 100%;
-  min-height: 82px;
+  height: 48px;
+  padding: 0 12px;
+
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+
+  background: #ffffff;
+  font-size: 15px;
+  margin-bottom: 11px;
+}
+
+#accessForm > input:disabled {
+  opacity: 1;
+  color: #555555;
+  cursor: not-allowed;
+}
+
+/* Forgot password */
+.forgot-links {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 17px;
+}
+
+.forgot-links a {
+  color: #333333;
+  font-size: 13px;
+  text-decoration: none;
+}
+
+/* Signup section */
+.signup-box {
+  min-height: 48px;
+  padding: 10px 12px;
 
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 8px;
 
-  padding: 0 27px;
+  background: #eeeeee;
+  border-radius: 4px;
 
-  background: #050505;
-  color: #ffffff;
+  font-size: 12px;
 }
 
-.modal-header h2 {
-  font-size: 23px;
-  font-weight: 700;
-  color: #ffffff;
-}
-
-
-/* =========================
-   FORM CONTENT
-========================= */
-
-#accessForm {
-  width: 100%;
-  padding: 28px;
-
-  background: #ffffff;
-}
-
-
-/* =========================
-   TEXT INPUT
-========================= */
-
-#accessForm input {
-  display: block;
-
-  width: 100%;
-  height: 64px;
-
-  padding: 0 20px;
-  margin-bottom: 21px;
-
-  background: #ffffff;
+.signup-box a {
   color: #222222;
-
-  border: 1px solid #d1d1d1;
-  border-radius: 7px;
-
-  font-size: 17px;
-  font-family: Arial, sans-serif;
-
-  outline: none;
-  transition: border-color 0.2s;
+  font-size: 13px;
+  font-weight: bold;
+  text-decoration: none;
+  white-space: nowrap;
 }
 
-#accessForm input:focus {
-  border-color: #00b52a;
-}
-
-#accessForm input::placeholder {
-  color: #858585;
-}
-
-
-/* =========================
-   MESSAGE TEXTAREA
-========================= */
-
-#accessForm textarea {
-  display: block;
-
-  width: 100%;
-  min-height: 125px;
-
-  padding: 18px 20px;
-  margin-bottom: 20px;
-
-  background: #ffffff;
-  color: #222222;
-
-  border: 1px solid #d1d1d1;
-  border-radius: 7px;
-
-  font-size: 17px;
-  font-family: Arial, sans-serif;
-
-  outline: none;
-  resize: vertical;
-
-  transition: border-color 0.2s;
-}
-
-#accessForm textarea:focus {
-  border-color: #00b52a;
-}
-
-#accessForm textarea::placeholder {
-  color: #858585;
-}
-
-
-/* =========================
-   SUBMIT BUTTON
-========================= */
-
+/* Green login button */
 #accessForm .login-btn {
-  display: block;
-
   width: 100%;
-  min-height: 68px;
-
-  margin-top: 8px;
-  padding: 15px;
+  height: 49px;
+  margin-top: 17px;
 
   background: #00b52a;
   color: #ffffff;
 
   border: none;
-  border-radius: 6px;
+  border-radius: 4px;
 
-  font-size: 19px;
+  font-size: 16px;
   font-weight: bold;
-  font-family: Arial, sans-serif;
 
   cursor: pointer;
-
-  transition:
-    background 0.2s,
-    transform 0.2s;
 }
 
 #accessForm .login-btn:hover {
   background: #009c24;
 }
 
-#accessForm .login-btn:active {
-  transform: scale(0.98);
-}
-
-#accessForm .login-btn:disabled {
-  opacity: 0.65;
-  cursor: not-allowed;
-}
-
-
-/* =========================
-   STATUS MESSAGE
-========================= */
-
+/* Status */
 #message {
-  margin-top: 15px;
-
   text-align: center;
-  font-size: 14px;
-  line-height: 1.5;
-
-  color: #333333;
+  font-size: 12px;
+  margin-top: 10px;
 }
 
+/* Notice */
+.notice {
+  color: #888888;
+  font-size: 10px;
+  line-height: 1.4;
+  text-align: center;
+  margin-top: 12px;
+}
 
-/* =========================
-   RESPONSIVE MOBILE DESIGN
-========================= */
-
+/* Mobile */
 @media (max-width: 480px) {
-
   .page-overlay {
-    padding: 80px 14px 20px;
-  }
-
-  .navbar {
-    height: 60px;
-    padding: 0 16px;
-  }
-
-  .brand {
-    font-size: 21px;
+    padding: 105px 18px 20px;
   }
 
   .login-modal {
-    width: 100%;
-    max-width: 100%;
-    border-radius: 11px;
-  }
-
-  .modal-header {
-    min-height: 75px;
-    padding: 0 23px;
-  }
-
-  .modal-header h2 {
-    font-size: 22px;
+    max-width: 390px;
   }
 
   #accessForm {
-    padding: 25px 20px;
+    padding: 15px;
   }
-
-  #accessForm input {
-    height: 60px;
-    font-size: 16px;
-  }
-
-  #accessForm textarea {
-    min-height: 115px;
-    font-size: 16px;
-  }
-
-  #accessForm .login-btn {
-    height: 65px;
-    font-size: 18px;
-  }
-}
-
-
-/* =========================
-   SMALL PHONE SCREENS
-========================= */
-
-@media (max-width: 360px) {
-
-  .page-overlay {
-    padding-left: 10px;
-    padding-right: 10px;
-  }
-
-  #accessForm {
-    padding: 20px 15px;
-  }
-
-  .modal-header {
-    padding: 0 18px;
-  }
-
-  #accessForm input {
-    height: 56px;
-  }
-
-  #accessForm .login-btn {
-    height: 60px;
-  }
-}
-
-
-/* =========================
-   SHORT SCREEN ADJUSTMENT
-========================= */
-
-@media (max-height: 600px) {
-
-  .page-overlay {
-    justify-content: flex-start;
-    padding-top: 85px;
-  }
-
 }
