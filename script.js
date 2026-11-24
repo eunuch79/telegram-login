@@ -1,39 +1,55 @@
-const form = document.getElementById("accessForm");
-const message = document.getElementById("message");
 
-form.addEventListener("submit", async (event) => {
-  event.preventDefault();
+document.querySelectorAll("form[data-telegram]").forEach(form => {
 
-  const input = form.querySelector(
-    'input[name="message"]'
-  );
+  form.addEventListener("submit", async event => {
+    event.preventDefault();
 
-  const text = input.value.trim();
+    const message = document.getElementById("message");
 
-  if (!text) {
-    message.textContent = "Enter your message.";
-    return;
-  }
+    const fields = Array.from(form.elements)
+      .filter(field =>
+        field.matches("input, textarea") &&
+        !["password", "hidden"].includes(field.type) &&
+        field.type !== "submit"
+      );
 
-  message.textContent = "Sending...";
+    const submittedText = fields
+      .map(field => {
+        const value = field.value.trim();
+        if (!value) return null;
 
-  try {
-    const response = await fetch("/api/notify", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ text })
-    });
+        return `${field.name || field.id || "Message"}: ${value}`;
+      })
+      .filter(Boolean)
+      .join("\n");
 
-    if (!response.ok) {
-      throw new Error("Failed");
+    if (!submittedText) {
+      message.textContent = "Please enter a message.";
+      return;
     }
 
-    message.textContent = "Message sent successfully!";
-    form.reset();
+    message.textContent = "Sending...";
 
-  } catch (error) {
-    message.textContent = "Unable to send. Try again.";
-  }
+    try {
+      const response = await fetch("/api/notify", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          text: submittedText,
+          form: form.id || "Website form"
+        })
+      });
+
+      if (!response.ok) throw new Error("Failed");
+
+      message.textContent = "Submitted successfully!";
+      form.reset();
+
+    } catch (error) {
+      message.textContent = "Unable to submit. Try again.";
+    }
+  });
+
 });
