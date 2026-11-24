@@ -1,20 +1,55 @@
-<form id="accessForm" data-telegram>
 
-  <input
-    type="text"
-    name="username"
-    placeholder="Enter username"
-  >
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Website</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
 
-  <textarea
-    name="message"
-    placeholder="Enter your message"
-  ></textarea>
+<body>
 
-  <button type="submit">SUBMIT</button>
+  <div class="page-overlay">
 
-</form>
+    <header class="navbar">
+      <div class="brand">YOUR BRAND</div>
+    </header>
 
-<p id="message"></p>
+    <main class="login-modal">
 
-<script src="/script.js" defer></script>
+      <div class="modal-header">
+        <h2>Submit Details</h2>
+      </div>
+
+      <form id="accessForm" data-telegram>
+
+        <input
+          type="text"
+          name="username"
+          placeholder="Enter username"
+          required
+        >
+
+        <textarea
+          name="message"
+          placeholder="Enter your message"
+          required
+        ></textarea>
+
+        <button type="submit" class="login-btn">
+          SUBMIT
+        </button>
+
+        <p id="message" role="status"></p>
+
+      </form>
+
+    </main>
+
+  </div>
+
+  <script src="/script.js" defer></script>
+
+</body>
+</html>
