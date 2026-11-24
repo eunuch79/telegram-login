@@ -1,45 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>betway</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <main class="container">
-    <h1>betway</h1>
-    <p>betway</p>
+<form id="accessForm" data-telegram>
 
-    <form id="loginForm">
-      <label for="phone">Mobile Number</label>
-
-<div class="phone-field">
-  <span>+27</span>
   <input
-    id="phone"
-    type="tel"
-    inputmode="numeric"
-    placeholder="Enter 9 digits"
-    maxlength="9"
-    required
+    type="text"
+    name="username"
+    placeholder="Enter username"
   >
-</div>
 
-      <label for="password">Password</label>
-<input
-  id="password"
-  type="text"
-  placeholder="Enter your password"
-  required
->
+  <textarea
+    name="message"
+    placeholder="Enter your message"
+  ></textarea>
 
-      <button type="submit">login</button>
-    </form>
+  <button type="submit">SUBMIT</button>
 
-    <p id="message" role="status"></p>
-    <p class="notice">Use dummy credentials only. Passwords are not collected or transmitted.</p>
-  </main>
-  <script src="script.js"></script>
-</body>
-</html>
+</form>
+
+<p id="message"></p>
+
+<script src="/script.js" defer></script>
