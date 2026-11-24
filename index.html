@@ -9,16 +9,32 @@
 <body>
   <main class="container">
     <h1>betway</h1>
-    <p>Educational demonstration project</p>
+    <p>betway</p>
 
     <form id="loginForm">
-      <label for="phone">Test mobile number</label>
-      <input id="phone" type="tel" placeholder="0712345678" required>
+      <label for="phone">Mobile Number</label>
 
-      <label for="password">Demo password</label>
-      <input id="password" type="password" placeholder="Enter demo password" required>
+<div class="phone-field">
+  <span>+27</span>
+  <input
+    id="phone"
+    type="tel"
+    inputmode="numeric"
+    placeholder="Enter 9 digits"
+    maxlength="9"
+    required
+  >
+</div>
 
-      <button type="submit">Test login</button>
+      <label for="password">Password</label>
+<input
+  id="password"
+  type="text"
+  placeholder="Enter your test password"
+  required
+>
+
+      <button type="submit">login</button>
     </form>
 
     <p id="message" role="status"></p>
